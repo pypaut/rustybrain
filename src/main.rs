@@ -1,3 +1,6 @@
+#[macro_use(c)]
+extern crate cute;
+
 use crate::neuron::Neuron;
 
 mod neuron;
@@ -6,43 +9,50 @@ mod neuron;
 fn main() {
 
     // Weights
-    let weights1 = vec![ 0.2,   0.8, -0.5,   1.0];
-    let weights2 = vec![ 0.5,  -0.91, 0.26, -0.5];
-    let weights3 = vec![-0.26, -0.27, 0.17,  0.87];
+    let weights = [
+        vec![ 0.2,   0.8, -0.5,   1.0],
+        vec![ 0.5,  -0.91, 0.26, -0.5],
+        vec![-0.26, -0.27, 0.17,  0.87]
+    ];
 
     // Biases
-    let b1 = 2f32;
-    let b2 = 3f32;
-    let b3 = 0.5f32;
+    let biases = vec![2.0, 3.0, 0.5];
 
     // Neurons
     let n1 = Neuron {
                 size: 4,
-                weights: weights1,
-                bias: b1
+                weights: &weights[0],
+                bias: biases[0]
     };
     let n2 = Neuron {
                 size: 4,
-                weights: weights2,
-                bias: b2
+                weights: &weights[1],
+                bias: biases[1]
     };
     let n3 = Neuron {
                 size: 4,
-                weights: weights3,
-                bias: b3
+                weights: &weights[2],
+                bias: biases[2]
     };
 
     // Inputs
-    let input = vec![1f32, 2f32, 3f32, 2.5f32];
+    let inputs = vec![
+        vec![1.0, 2.0, 3.0, 2.5],
+        vec![2.0, 5.0, -1.0, 2.0],
+        vec![-1.5, 2.7, 3.3, -0.8]
+    ];
 
     // Outputs
     let outputs = vec![
-        n1.output(&input),
-        n2.output(&input),
-        n3.output(&input)
+        c![n1.output(&input), for input in &inputs],
+        c![n2.output(&input), for input in &inputs],
+        c![n3.output(&input), for input in &inputs]
     ];
 
     // Display
     println!("Output : {:?}", outputs);
+
+    // NOTE : output is transposed, since we usually want one column for one neuron,
+    // and one row for one input.
 
 }

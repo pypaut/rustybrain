@@ -1,10 +1,10 @@
-pub struct Neuron {
+pub struct Neuron<'a> {
     pub size : usize,
-    pub weights : Vec<f32>,
+    pub weights : &'a Vec<f32>,
     pub bias : f32
 }
 
-impl Neuron {
+impl Neuron<'_> {
     pub fn output(&self, input : &Vec<f32>) -> f32 {
         if input.len() != self.size {
             panic!("You fool.");

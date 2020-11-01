@@ -5,3 +5,4 @@ authors = ["Geoffrey Jount <geoffreyjt@outlook.fr>"]
 edition = "2018"
 
 [dependencies]
+cute = "0.3.0"
