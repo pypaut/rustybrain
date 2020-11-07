@@ -11,6 +11,17 @@ pub struct Matrix {
 
 
 impl Matrix {
+    pub fn new(n: usize, p: usize) -> Matrix {
+        let mut val = vec![];
+        for i in 0..n {
+            val.push(vec![]);
+            for j in 0..p {
+                val[i].push(0.0);
+            }
+        }
+        return Matrix {n: n, p: p, val: val};
+    }
+
     pub fn mult(&self, rhs : &Matrix) -> Matrix {
         if self.p != rhs.n {
             panic!("Mind the dimension!");
@@ -43,10 +54,10 @@ impl Matrix {
     }
 }
 
-impl ops::Add<Matrix> for Matrix {
+impl ops::Add<&Matrix> for &Matrix {
     type Output = Matrix;
 
-    fn add(self, rhs: Matrix) -> Matrix {
+    fn add(self, rhs: &Matrix) -> Matrix {
         if self.n != rhs.n || self.p != rhs.p {
             panic!("Mind the dimension!");
         }

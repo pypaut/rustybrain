@@ -1,34 +1,14 @@
+use crate::layer::Layer;
 use crate::matrix::Matrix;
 
+mod layer;
 mod matrix;
 
 
 fn main() {
 
-    // Weights
-    let weights = Matrix {
-        n: 3,
-        p: 4,
-        val: vec![
-            vec![0.2, 0.8, -0.5, 1.0],
-            vec![0.5, -0.91, 0.26, -0.5],
-            vec![-0.26, -0.27, 0.17, 0.87]
-        ]
-    };
-
-    // Biases
-    let biases = Matrix {
-        n: 3,
-        p: 3,
-        val: vec![
-            vec![2.0, 3.0, 0.5],
-            vec![2.0, 3.0, 0.5],
-            vec![2.0, 3.0, 0.5]
-        ]
-    };
-
     // Inputs
-    let inputs = Matrix {
+    let X = Matrix {
         n: 3,
         p: 4,
         val: vec![
@@ -38,10 +18,13 @@ fn main() {
         ]
     };
 
-    // Outputs
-    let outputs = inputs.mult(&weights.transposed()) + biases;
+    // Initialize layer
+    let l = Layer::new(3, 4);
+
+    // Compute outputs
+    let outputs = l.forward(X);
 
     // Display
-    println!("Output : {:?}", outputs.val);
+    println!("Outputs: {?}", outputs.val);
 
 }
